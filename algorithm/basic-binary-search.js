@@ -25,9 +25,5 @@ function BasicBinarySearch(origin,target){
     }
     return null
 }
-// Basic-test
-const list = [1,3,5,7,9]
-console.log(BasicBinarySearch(list,3))
-console.log(BasicBinarySearch(list,-1))
-console.log(BasicBinarySearch(list,9))
-console.log(BasicBinarySearch(list,1.2))
+
+module.exports = BasicBinarySearch

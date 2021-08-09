@@ -1,0 +1,17 @@
+{
+  "name": "js-algorithm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Lanbasara/js-algorithm",
+  "author": "Lanbasara <ghkagg@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  },
+  "scripts": {
+    "test" : "jest"
+  }
+}
