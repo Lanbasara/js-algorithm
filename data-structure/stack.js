@@ -1,7 +1,7 @@
 /**
  * 栈
  * 在JS中，通常可以使用数组来模拟栈的行为
- * 特点：先入先出（FIFO）
+ * 特点：先入后出（FILO）
  * 核心操作：
  * 1. 入栈
  * 2. 出栈
@@ -13,7 +13,6 @@ class MyJSStack {
   }
   push(item){
     this.stack.push(item)
-    return this.stack[this.stack.length - 1]
   }
   pop(){
     return this.stack.pop()
@@ -28,3 +27,5 @@ class MyJSStack {
     return this.getLength() === 0
   }
 }
+
+module.exports = MyJSStack
