@@ -5,7 +5,7 @@
  * 核心操作：
  * 1. 入栈
  * 2. 出栈
- * 3. peek 查看栈顶元素
+ * 3. peek 查看栈顶元素(最后一个元素)
  */
 class MyJSStack {
   constructor(){
