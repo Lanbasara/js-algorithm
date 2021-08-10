@@ -59,7 +59,7 @@ class MyCycleQueue {
   }
   enQueue(item) {
     if (this.isFull()) {
-      console.warn("queue is full");
+      console.warn('queue is full');
       return;
     }
     this.queue[this.tail] = item;
@@ -69,7 +69,7 @@ class MyCycleQueue {
   }
   deQueue() {
     if (this.isEmpty()) {
-      console.warn("queue is empty");
+      console.warn('queue is empty');
       return;
     }
     let item = this.queue[this.head];
@@ -81,7 +81,7 @@ class MyCycleQueue {
   }
   getHeader() {
     if (this.isEmpty()) {
-      console.warn("queue is empty");
+      console.warn('queue is empty');
       return;
     }
     return this.queue[this.head];

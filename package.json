@@ -14,6 +14,7 @@
     "prettier": "^2.3.2"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "reset" : "npx rimraf node_modules"
   }
 }
