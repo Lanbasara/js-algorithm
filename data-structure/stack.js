@@ -9,23 +9,23 @@
  */
 class MyJSStack {
   constructor() {
-    this.stack = []
+    this.stack = [];
   }
   push(item) {
-    this.stack.push(item)
+    this.stack.push(item);
   }
   pop() {
-    return this.stack.pop()
+    return this.stack.pop();
   }
   peek() {
-    return this.stack[this.stack.length - 1]
+    return this.stack[this.stack.length - 1];
   }
   getLength() {
-    return this.stack.length
+    return this.stack.length;
   }
   isEmpty() {
-    return this.getLength() === 0
+    return this.getLength() === 0;
   }
 }
 
-module.exports = MyJSStack
+module.exports = MyJSStack;
