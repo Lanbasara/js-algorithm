@@ -8,22 +8,22 @@
  * 3. peek 查看栈顶元素(最后一个元素)
  */
 class MyJSStack {
-  constructor(){
+  constructor() {
     this.stack = []
   }
-  push(item){
+  push(item) {
     this.stack.push(item)
   }
-  pop(){
+  pop() {
     return this.stack.pop()
   }
-  peek(){
+  peek() {
     return this.stack[this.stack.length - 1]
   }
-  getLength(){
+  getLength() {
     return this.stack.length
   }
-  isEmpty(){
+  isEmpty() {
     return this.getLength() === 0
   }
 }

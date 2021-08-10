@@ -14,22 +14,22 @@
 
 // 单链队列实现，类似栈，使用数组模拟
 class MyQueue {
-    constructor(){
+    constructor() {
         this.queue = []
     }
-    enQueue(item){
+    enQueue(item) {
         this.queue.push(item)
     }
-    deQueue(){
+    deQueue() {
         return this.queue.shift()
     }
-    getHeader(){
+    getHeader() {
         return this.queue[0]
     }
-    getLength(){
+    getLength() {
         return this.queue.length
     }
-    isEmpty(){
+    isEmpty() {
         return this.getHeader() === 0
     }
 }
@@ -43,32 +43,32 @@ class MyQueue {
  * 4. 在更新指针的时候，需要使用 (%)操作 防止越界问题
  */
 class MyCycleQueue {
-    constructor(length){
+    constructor(length) {
         // 要点3
-        this.queue = new Array(length+1)
+        this.queue = new Array(length + 1)
         // 要点1
         this.head = 0
         this.tail = 0
         this.size = 0
     }
-    isEmpty(){
+    isEmpty() {
         return this.queue.length === 0
     }
-    isFull(){
+    isFull() {
         return ((this.tail + 1) % this.queue.length) === this.head
     }
-    enQueue(item){
-        if(this.isFull()){
+    enQueue(item) {
+        if (this.isFull()) {
             console.warn('queue is full')
             return
         }
         this.queue[this.tail] = item;
         this.size++;
         // 要点4
-        this.tail  = (this.tail+1)%this.queue.length
+        this.tail = (this.tail + 1) % this.queue.length
     }
-    deQueue(){
-        if(this.isEmpty()){
+    deQueue() {
+        if (this.isEmpty()) {
             console.warn('queue is empty')
             return
         }
@@ -76,20 +76,20 @@ class MyCycleQueue {
         this.queue[this.head] = null;
         this.size--;
         // 要点4
-        this.head = (this.head+1)%this.queue.length
+        this.head = (this.head + 1) % this.queue.length
         return item;
     }
-    getHeader(){
-        if(this.isEmpty()){
+    getHeader() {
+        if (this.isEmpty()) {
             console.warn('queue is empty')
             return
         }
         return this.queue[this.head]
     }
-    getLength(){
+    getLength() {
         return this.size
     }
 
 }
 
-module.exports = {MyQueue,MyCycleQueue}
+module.exports = { MyQueue, MyCycleQueue }

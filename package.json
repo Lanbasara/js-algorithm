@@ -5,13 +5,14 @@
   "repository": "https://github.com/Lanbasara/js-algorithm",
   "author": "Lanbasara <ghkagg@outlook.com>",
   "license": "MIT",
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.24.0",
     "jest": "^27.0.6"
   },
   "scripts": {
-    "test" : "jest"
+    "test": "jest"
   }
 }
