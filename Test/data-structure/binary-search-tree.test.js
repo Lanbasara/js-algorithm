@@ -13,9 +13,34 @@ test('二分搜索树测试', () => {
 
   expect(bst.midTraversal()).toEqual([-122, -10, -10, -1, 1, 2, 10, 12, 122]);
   expect(bst.breadthTraserval()).toEqual([1, -1, 2, -10, 10, -122, -10, 12, 122]);
-  expect(bst.getMin()).toBe(-122);
+  expect(bst.getMin().value).toBe(-122);
   expect(bst.getMax()).toBe(122);
+  bst.delectMin();
+  expect(bst.getMin().value).toBe(-10);
   expect(bst.floor(-123)).toBe(null);
-  expect(bst.ceil(-123)).toBe(-122);
-  expect(bst.selectNode(0)).toBe(-122);
+  expect(bst.ceil(-123)).toBe(-10);
+  expect(bst.selectNode(0)).toBe(-10);
+  bst.delectMin();
+  bst.delectMin();
+  bst.delectMin();
+  expect(bst.midTraversal()).toEqual([1, 2, 10, 12, 122]);
+});
+
+test('二分搜索树测试2', () => {
+  const bst = new BST();
+  bst.addNode(1);
+  bst.addNode(-1);
+  bst.addNode(2);
+  bst.addNode(10);
+  bst.addNode(-10);
+  bst.addNode(-9);
+  bst.addNode(-122);
+  bst.addNode(12);
+  bst.addNode(122);
+  bst.addNode(-120);
+  expect(bst.midTraversal()).toEqual([-122, -120, -10, -9, -1, 1, 2, 10, 12, 122]);
+  bst.delectMin();
+  expect(bst.getMin().value).toBe(-120);
+  bst.delete(-10);
+  expect(bst.midTraversal()).toEqual([-120, -9, -1, 1, 2, 10, 12, 122]);
 });

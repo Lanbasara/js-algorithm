@@ -20,6 +20,7 @@
  * 4. 广度遍历：需要借助队列，不断将左右子树节点入队
  * 5. 寻找最大最小值： 递归寻找左 / 右 子树
  * 6. 寻找排名为n的值：需要给每个节点添加一个size属性，记录自己+子节点个数。通过size先对比左子树的个数，再对比右子树的个数
+ * 7. 删除节点。删除最小节点。删除任意节点的步骤总结
  */
 const { MyQueue } = require('./queue');
 
@@ -116,12 +117,13 @@ class BST {
     return res;
   }
   getMin() {
-    function _getmin(node) {
-      if (!node.left) return node;
-      return _getmin(node.left);
-    }
-    return _getmin(this.root).value;
+    return this._getmin(this.root);
   }
+  _getmin(node) {
+    if (!node.left) return node;
+    return this._getmin(node.left);
+  }
+
   getMax() {
     function _getmax(node) {
       if (!node.right) return node;
@@ -170,6 +172,39 @@ class BST {
       return node;
     }
     return _ceil(this.root, v) ? _ceil(this.root, v).value : null;
+  }
+  delectMin() {
+    this.root = this._delectMin(this.root);
+  }
+  _delectMin(node) {
+    // 一直递归左子树
+    // 如果左子树为空，就判断节点是否拥有右子树
+    // 有右子树的话就把需要删除的节点替换为右子树
+    if ((node != null) & !node.left) return node.right;
+    node.left = this._delectMin(node.left);
+    // 最后需要重新维护下节点的 `size`
+    node.size = this._getSize(node.left) + this._getSize(node.right) + 1;
+    return node;
+  }
+  delete(v) {
+    this.root = this._delete(this.root, v);
+  }
+  _delete(node, v) {
+    if (!node) return null;
+    if (node.value < v) {
+      node.right = this._delete(node.right, v);
+    } else if (node.value > v) {
+      node.left = this._delete(node.left, v);
+    } else {
+      if (!node.left) return node.right;
+      if (!node.right) return node.left;
+      let min = this._getmin(node.right);
+      min.right = this._delectMin(node.right);
+      min.left = node.left;
+      node = min;
+    }
+    node.size = this._getSize(node.left) + this._getSize(node.right) + 1;
+    return node;
   }
 }
 
