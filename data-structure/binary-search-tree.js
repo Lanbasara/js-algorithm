@@ -12,18 +12,18 @@
  * 特点
  * 1. 对于每个节点，左子树的每个节点的值都小于该节点都小于右子树的每个节点的值
  * 即，对于任何一个节点 左 < self < 右
- *
- * 要点
- * 1. 添加节点的递归操作，不断根据情况更新左右子树
- * 2. 遍历，按照顺序进行递归操作
- * 3. 深度遍历：按照既定顺序递归左右子树
- * 4. 广度遍历：需要借助队列，不断将左右子树节点入队
- * 5. 寻找最大最小值： 递归寻找左 / 右 子树
- * 6. 寻找排名为n的值：需要给每个节点添加一个size属性，记录自己+子节点个数。通过size先对比左子树的个数，再对比右子树的个数
- * 7. 删除节点。删除最小节点。删除任意节点的步骤总结
  */
-const { MyQueue } = require('./queue');
 
+/**
+ * 核心操作
+ * 1. 添加节点
+ * 2. 遍历节点（3种深度，一种广度）
+ * 3. 寻找最大/最小值
+ * 4. 向上/向下取整
+ * 5. 取得排名值
+ * 6. 删除最大/最小节点
+ * 7. 删除任意节点
+ */
 class Node {
   constructor(v) {
     this.value = v;
@@ -38,10 +38,9 @@ class BST {
     this.root = null;
     this.size = 0;
   }
-  isEmpty() {
-    return this.size === 0;
+  addNode(item) {
+    this.root = this._addNode(this.root, item);
   }
-  // 要点1
   _addNode(node, v) {
     if (!node) {
       this.size++;
@@ -56,150 +55,147 @@ class BST {
     }
     return node;
   }
-  _getSize(node) {
-    return node ? node.size : 0;
-  }
-
-  selectNode(index) {
-    function _select(node, index) {
-      if (!node) return;
-      let sizeOnLeft = node.left ? node.left.size : 0;
-      if (sizeOnLeft > index) {
-        return _select(node.left, index);
-      }
-      if (sizeOnLeft < index) {
-        return _select(node.right, index - sizeOnLeft - 1);
-      }
-      return node;
-    }
-    return _select(this.root, index) ? _select(this.root, index).value : null;
-  }
-
-  addNode(v) {
-    this.root = this._addNode(this.root, v);
-  }
-  preTraversal() {
-    const res = [];
-    function _pre(node) {
-      if (node) {
-        res.push(node.value);
-        _pre(node.left);
-        _pre(node.right);
-      }
-    }
-    _pre(this.root);
-    return res;
-  }
-
   midTraversal() {
     const res = [];
-    function _mid(node) {
+    function _midTraversal(node) {
       if (node) {
-        _mid(node.left);
+        _midTraversal(node.left);
         res.push(node.value);
-        _mid(node.right);
+        _midTraversal(node.right);
       }
     }
-    _mid(this.root);
+    _midTraversal(this.root);
     return res;
   }
-
-  backTraserval() {
+  prevTraversal() {
     const res = [];
-    function _back(node) {
+    function _prevTraversal(node) {
       if (node) {
-        _back(node.right);
-        _back(node.left);
+        res.push(node.value);
+        _prevTraversal(node.left);
+        _prevTraversal(node.right);
+      }
+    }
+    _prevTraversal(this.root);
+    return res;
+  }
+  backTraversal() {
+    const res = [];
+    function _backTraversal(node) {
+      if (node) {
+        _backTraversal(node.left);
+        _backTraversal(node.right);
         res.push(node.value);
       }
     }
-    _back(this.root);
+    _backTraversal(this.root);
+    return res;
+  }
+  breadthTraversal() {
+    if (!this.root) return null;
+    let q = [];
+    let res = [];
+    q.push(this.root);
+    while (q.length) {
+      let node = q.shift();
+      res.push(node.value);
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
+    }
     return res;
   }
   getMin() {
-    return this._getmin(this.root);
+    return this._getMin(this.root);
   }
-  _getmin(node) {
+  _getMin(node) {
     if (!node.left) return node;
-    return this._getmin(node.left);
+    return this._getMin(node.left);
   }
-
   getMax() {
-    function _getmax(node) {
-      if (!node.right) return node;
-      return _getmax(node.right);
+    return this._getMax(this.root);
+  }
+  _getMax(node) {
+    if (!node.right) return node;
+    return this._getMax(node.right);
+  }
+  floor(item) {
+    return this._floor(this.root, item) ? this._floor(this.root, item).value : null;
+  }
+  _floor(node, v) {
+    if (!node) return null;
+    if (node.value === v) return node;
+    if (node.value > v) {
+      return this._floor(node.left, v);
     }
-    return _getmax(this.root).value;
+    let right = this._floor(node.right, v);
+    if (right) return right;
+    return node;
   }
-  breadthTraserval() {
-    const res = [];
-    if (!this.root) return null;
-    const q = new MyQueue();
-    q.enQueue(this.root);
-    while (q.getLength()) {
-      let n = q.deQueue();
-      res.push(n.value);
-      if (n.left) q.enQueue(n.left);
-      if (n.right) q.enQueue(n.right);
+  ceil(item) {
+    return this._ceil(this.root, item) ? this._ceil(this.root, item).value : null;
+  }
+  _ceil(node, v) {
+    if (!node) return null;
+    if (node.value === v) return node;
+    if (node.value < v) {
+      return this._ceil(node.right, v);
     }
-    return res;
+    let left = this._ceil(node.left, v);
+    if (left) return left;
+    return node;
   }
-  floor(v) {
-    function _floor(node, v) {
-      if (!node) return null;
-      if (node.value === v) return node;
-      if (node.value > v) {
-        return _floor(node.left, v);
-      }
-      let right = _floor(node.right, v);
-      if (right) return right;
-
-      return node;
+  _getSize(node) {
+    return node ? node.size : 0;
+  }
+  select(item) {
+    return this._select(this.root, item) ? this._select(this.root, item).value : null;
+  }
+  _select(node, index) {
+    if (!node) return null;
+    let sizeOnLeft = this._getSize(node.left);
+    if (sizeOnLeft > index) {
+      return this._select(node.left, index);
     }
-    return _floor(this.root, v) ? _floor(this.root, v).value : null;
-  }
-  ceil(v) {
-    function _ceil(node, v) {
-      if (!node) return null;
-      if (node.value === v) {
-        return node;
-      }
-      if (node.value < v) {
-        return _ceil(node.right, v);
-      }
-      let left = _ceil(node.left, v);
-      if (left) return left;
-      return node;
+    if (sizeOnLeft < index) {
+      return this._select(node.right, index - 1 - sizeOnLeft);
     }
-    return _ceil(this.root, v) ? _ceil(this.root, v).value : null;
+    return node;
   }
-  delectMin() {
-    this.root = this._delectMin(this.root);
+  deleteMin() {
+    this.root = this._deleteMin(this.root);
+    this.size--;
   }
-  _delectMin(node) {
-    // 一直递归左子树
-    // 如果左子树为空，就判断节点是否拥有右子树
-    // 有右子树的话就把需要删除的节点替换为右子树
-    if ((node != null) & !node.left) return node.right;
-    node.left = this._delectMin(node.left);
-    // 最后需要重新维护下节点的 `size`
+  _deleteMin(node) {
+    if (node && !node.left) return node.right;
+    node.left = this._deleteMin(node.left);
     node.size = this._getSize(node.left) + this._getSize(node.right) + 1;
     return node;
   }
-  delete(v) {
-    this.root = this._delete(this.root, v);
+  deleteMax() {
+    this.root = this._deleteMax(this.root);
+    this.size--;
   }
-  _delete(node, v) {
+  _deleteMax(node) {
+    if (node && !node.right) return node.left;
+    node.right = this._deleteMax(node.right);
+    node.size = this._getSize(node.left) + this._getSize(node.right) + 1;
+    return node;
+  }
+  deleteNode(item) {
+    this.root = this._deleteNode(this.root, item);
+    this.size--;
+  }
+  _deleteNode(node, value) {
     if (!node) return null;
-    if (node.value < v) {
-      node.right = this._delete(node.right, v);
-    } else if (node.value > v) {
-      node.left = this._delete(node.left, v);
+    if (node.value < value) {
+      node.right = this._deleteNode(node.right, value);
+    } else if (node.value > value) {
+      node.left = this._deleteNode(node.left, value);
     } else {
       if (!node.left) return node.right;
       if (!node.right) return node.left;
-      let min = this._getmin(node.right);
-      min.right = this._delectMin(node.right);
+      let min = this._getMin(node.right);
+      min.right = this._deleteMin(node.right);
       min.left = node.left;
       node = min;
     }
