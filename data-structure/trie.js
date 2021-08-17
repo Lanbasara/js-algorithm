@@ -8,9 +8,9 @@
 // 以英文为例，26个字母
 class TrieNode {
   constructor() {
-    // 出发的边
+    // 经过的边
     this.path = 0;
-    // 进入的边
+    // 终结点的记录
     this.end = 0;
     this.next = new Array(26).fill(null);
   }
@@ -63,14 +63,4 @@ class Trie {
   }
 }
 
-const trie = new Trie();
-trie.insert('abc');
-trie.insert('cdb');
-trie.insert('efd');
-trie.insert('efd');
-trie.insert('abc');
-console.log(trie.search('abc'));
-console.log(trie.search('efd'));
-trie.delete('efd');
-console.log(trie.search('efd'));
-debugger;
+module.exports = Trie;
