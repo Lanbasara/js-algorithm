@@ -1,0 +1,23 @@
+const DisjointSetV2 = require('../../data-structure/disjoint-set');
+test('并查集，测试', () => {
+  const ds = new DisjointSetV2();
+  ds.addNodeIn(1);
+  ds.addNodeIn(2);
+  ds.addNodeIn(3);
+  ds.addNodeIn(4);
+  ds.addNodeIn(5);
+  expect(ds.find(2).value).toBe(2);
+  expect(ds.isContact(2, 3)).toBe(false);
+  ds.union(3, 2);
+  ds.union(5, 1);
+  ds.union(5, 4);
+  expect(ds.find(2).value).toBe(3);
+  expect(ds.find(1).value).toBe(5);
+  expect(ds.find(4).value).toBe(5);
+  expect(ds.isContact(2, 3)).toBe(true);
+  expect(ds.isContact(2, 4)).toBe(false);
+  expect(ds.isContact(3, 5)).toBe(false);
+  ds.union(3, 5);
+  expect(ds.isContact(3, 5)).toBe(true);
+  expect(ds.find(3).value).toBe(5);
+});

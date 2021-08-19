@@ -40,17 +40,55 @@ class DisjointSet {
     }
   }
 }
-const ds = new DisjointSet(5);
-console.log(ds.find(2));
-console.log(ds.find(1));
-console.log(ds.isContact(2, 1));
-ds.union(2, 3);
-ds.union(0, 1);
-ds.union(4, 1);
-debugger;
-ds.union(1, 3);
-console.log(ds.find(0));
-console.log(ds.find(2));
-console.log(ds.find(3));
-console.log(ds.find(4));
-console.log('ds is', ds);
+
+class Node {
+  constructor(v) {
+    this.value = v;
+    this.parent = null;
+    this.rank = 1;
+  }
+}
+class DisjointSetV2 {
+  constructor() {
+    this.map = new Map();
+  }
+  addNodeIn(v) {
+    let newNode = new Node(v);
+    this.map.set(v, newNode);
+  }
+  find(v) {
+    let target = this.map.get(v);
+    if (!target) return null;
+    while (target.parent) {
+      target = target.parent;
+    }
+    return target;
+  }
+  isContact(value1, value2) {
+    return this.find(value1).value === this.find(value2).value;
+  }
+  union(value1, value2) {
+    let origin1 = this.find(value1);
+    let origin2 = this.find(value2);
+    if (origin1.value > origin2.value) {
+      origin2.parent = origin1;
+      origin1.rank++;
+    } else if (origin1.value < origin2.value) {
+      origin1.parent = origin2;
+      origin2.rank++;
+    } else if (origin1.value === origin2.value) {
+      if (origin1.rank > origin2.rank) {
+        origin2.parent = origin1;
+        origin1.rank++;
+      } else if (origin1.rank < origin2.rank) {
+        origin1.parent = origin2;
+        origin2.rank++;
+      } else if (origin1.rank === origin2.rank) {
+        origin1.parent = origin2;
+        origin2.rank++;
+      }
+    }
+  }
+}
+
+module.exports = DisjointSetV2;
