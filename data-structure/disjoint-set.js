@@ -30,17 +30,27 @@ class DisjointSet {
     if (i === j) return;
     if (this.rank[i] < this.rank[j]) {
       this.parent[i] = j;
+      this.rank[j] += 1;
     } else if (this.rank[i] > this.rank[j]) {
       this.parent[j] = i;
+      this.rank[i] += 1;
     } else {
       this.parent[i] = j;
       this.rank[j] += 1;
     }
   }
 }
-const ds = new DisjointSet(3);
+const ds = new DisjointSet(5);
 console.log(ds.find(2));
 console.log(ds.find(1));
 console.log(ds.isContact(2, 1));
-ds.union(2, 1);
-console.log(ds.isContact(2, 1));
+ds.union(2, 3);
+ds.union(0, 1);
+ds.union(4, 1);
+debugger;
+ds.union(1, 3);
+console.log(ds.find(0));
+console.log(ds.find(2));
+console.log(ds.find(3));
+console.log(ds.find(4));
+console.log('ds is', ds);
