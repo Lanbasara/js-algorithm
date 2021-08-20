@@ -5,3 +5,6 @@
 
 ## 题目路径
 [Leetcode官方入门](https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/x6w3ds/)
+
+## Leetcode引用的js扩展数据类型
+[datastructure-js](https://github.com/datastructures-js)
