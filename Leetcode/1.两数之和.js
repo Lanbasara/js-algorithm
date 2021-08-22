@@ -9,6 +9,7 @@
  * @param {number[]} nums
  * @param {number} target
  * @return {number[]}
+ * @tags Array|Map
  */
 var twoSum = function (nums, target) {
   let map = new Map();
