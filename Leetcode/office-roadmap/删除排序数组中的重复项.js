@@ -32,8 +32,6 @@ var removeDuplicates = function(nums) {
       right++;
     }
   }
-  console.log('left is',left)
-  console.log('right is',right)
   nums.splice(left+1, nums.length-left)
   return nums
 };
