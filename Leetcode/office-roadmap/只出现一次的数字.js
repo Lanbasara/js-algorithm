@@ -19,6 +19,15 @@
   }
   return Array.from(set)[0]
 };
+
+var singleNumber2 = function(nums) {
+    let res = 0
+    for(let i=0;i<nums.length;i++){
+        res ^= nums[i]
+    }
+    return res
+  };
+
 const a = [2,2,1]
 const b = [4,1,2,1,2]
 console.log(singleNumber(a))
