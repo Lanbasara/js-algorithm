@@ -8,3 +8,6 @@
 
 ## Leetcode引用的js扩展数据类型
 [datastructure-js](https://github.com/datastructures-js)
+
+## 拓展阅读
+1. [链表解读](https://lucifer.ren/leetcode/thinkings/linked-list.html)
