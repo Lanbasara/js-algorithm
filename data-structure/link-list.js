@@ -15,8 +15,8 @@
  */
 // 要点1
 class Node {
-  constructor(value, next) {
-    this.value = value;
+  constructor(val, next) {
+    this.val = val;
     this.next = next;
   }
 }
@@ -35,20 +35,20 @@ class LinkList {
   checkIndex(index) {
     if (index < -1 || index > this.size) throw Error('index error');
   }
-  addNode(index, value) {
+  addNode(index, val) {
     this.checkIndex(index);
     let prev = this.find(this.dummyHead, index, 0);
-    prev.next = new Node(value, prev.next);
+    prev.next = new Node(val, prev.next);
     this.size++;
   }
-  insertNode(index, value) {
-    this.addNode(index, value);
+  insertNode(index, val) {
+    this.addNode(index, val);
   }
-  addNodeToLast(value) {
-    this.addNode(this.size, value);
+  addNodeToLast(val) {
+    this.addNode(this.size, val);
   }
-  addNodeToFirst(value) {
-    this.addNode(0, value);
+  addNodeToFirst(val) {
+    this.addNode(0, val);
   }
   revomeNode(index) {
     this.checkIndex(index);
@@ -82,6 +82,18 @@ class LinkList {
   }
   getSize() {
     return this.size;
+  }
+  toArray() {
+    if (this.isEmpty()) {
+      return [];
+    }
+    let res = [];
+    let node = this.dummyHead.next;
+    while (node) {
+      res.push(node.val);
+      node = node.next;
+    }
+    return res;
   }
 }
 

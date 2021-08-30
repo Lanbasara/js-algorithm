@@ -9,5 +9,5 @@ test('链表', () => {
   myLinkList.removeLastNode();
   myLinkList.addNodeToFirst(3);
   myLinkList.revomeNode(3);
-  expect(myLinkList.getNode(3).value).toBe(4);
+  expect(myLinkList.getNode(3).val).toBe(4);
 });

@@ -5,7 +5,9 @@
   "repository": "https://github.com/Lanbasara/js-algorithm",
   "author": "Lanbasara <ghkagg@outlook.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "rimraf": "^3.0.2"
+  },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
@@ -15,6 +17,6 @@
   },
   "scripts": {
     "test": "jest",
-    "reset" : "npx rimraf node_modules"
+    "reset": "npx rimraf node_modules"
   }
 }

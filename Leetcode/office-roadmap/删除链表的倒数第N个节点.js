@@ -1,3 +1,5 @@
+const LinkList = require('../../data-structure/link-list')
+
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -10,7 +12,6 @@
  * @param {number} n
  * @return {ListNode}
  */
-
 // 方法1: 正向遍历
  var removeNthFromEnd = function(head, n) {
   let node = head;
@@ -64,3 +65,12 @@ var removeNthFromEnd2 = function(head, n) {
     return head
 
 };
+const list = new LinkList()
+list.addNodeToLast(1)
+list.addNodeToLast(2)
+list.addNodeToLast(3)
+list.addNodeToLast(4)
+list.addNodeToLast(5)
+console.log(list.toArray())
+removeNthFromEnd2(list.dummyHead.next,2)
+console.log(list.toArray())
