@@ -51,3 +51,37 @@ console.log(list1.toArray())
 console.log(list2.toArray())
 console.log(mergeTwoLists(list1.dummyHead.next,list2.dummyHead.next))
 console.log('结束')
+
+
+var mergeTwoLists = function(l1, l2) {
+    if(!l1 && !l2){
+        return null
+    }
+    if(!l1){
+        return l2
+    }
+    if(!l2){
+        return l1
+    }
+    let newList = {next:null}
+    let node = newList
+    while(l1||l2){
+        if(!l1){
+            node.next = l2
+            return 
+        }
+        if(!l2){
+            node.next = l1
+            return 
+        }
+        if(l1.val > l2.val){
+            node.next = l2;
+            l2 = l2.next
+        } else {
+            node.next = l1
+            l1 = l1.next
+        }
+        node = node.next
+    }
+    return newList.next
+};
