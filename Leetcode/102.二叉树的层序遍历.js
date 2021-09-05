@@ -1,4 +1,4 @@
-const BST = require('../data-structure/binary-search-tree')
+const BST = require('../data-structure/binary-search-tree');
 /*
  * @lc app=leetcode.cn id=102 lang=javascript
  *
@@ -18,25 +18,25 @@ const BST = require('../data-structure/binary-search-tree')
  * @param {TreeNode} root
  * @return {number[][]}
  */
- var levelOrder = function(root) {
-  if(!root){
-      return []
+var levelOrder = function (root) {
+  if (!root) {
+    return [];
   }
-  const res = []
-  let q = []
-  q.push(root)
-  while(q.length){
-      let temp = []
-      let size = q.length
-      for(let i=0;i<size;i++){
-          let node = q.shift()
-          if(node.left) q.push(node.left)
-          if(node.right) q.push(node.right)
-          temp.push(node.val)
-      }
-      res.push(temp)
+  const res = [];
+  let q = [];
+  q.push(root);
+  while (q.length) {
+    let temp = [];
+    let size = q.length;
+    for (let i = 0; i < size; i++) {
+      let node = q.shift();
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
+      temp.push(node.val);
+    }
+    res.push(temp);
   }
-  return res
+  return res;
 };
 // [3,9,20,null,null,15,7]
 /**
@@ -46,15 +46,7 @@ const BST = require('../data-structure/binary-search-tree')
     /  \
    15   7
  */
-const bst = new BST()
-bst.addNodeTra(3)
-bst.addNodeTra(9)
-bst.addNodeTra(20)
-bst.addNodeTra(null)
-bst.addNodeTra(null)
-bst.addNodeTra(15)
-bst.addNodeTra(7)
-console.log('bst is',bst)
-debugger
+const bst = new BST();
+console.log(bst.array2binary([3, 9, 20, null, null, 15, 7]));
+debugger;
 // @lc code=end
-

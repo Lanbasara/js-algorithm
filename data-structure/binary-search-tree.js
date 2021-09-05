@@ -203,11 +203,34 @@ class BST {
     return node;
   }
   // 作为普通二叉树的层序插入
-  addNodeTra(value) {
-    this.root = this._addNodeTra(this.root, value);
-  }
-  _addNodeTra(node, value) {
-    
+  array2binary(arr) {
+    if (!arr || !arr.length) {
+      return null;
+    }
+    let index = 0;
+    const queue = [];
+    const len = arr.length;
+    const head = new Node(arr[index]);
+    queue.push(head);
+
+    while (index < len) {
+      index++;
+      const parent = queue.shift();
+      if (arr[index] !== null && arr[index] !== undefined) {
+        const node = new Node(arr[index]);
+        parent.left = node;
+        queue.push(node);
+      }
+
+      index++;
+      if (arr[index] !== null && arr[index] !== undefined) {
+        const node = new Node(arr[index]);
+        parent.right = node;
+        queue.push(node);
+      }
+    }
+    console.log('head is', head);
+    return head;
   }
 }
 
