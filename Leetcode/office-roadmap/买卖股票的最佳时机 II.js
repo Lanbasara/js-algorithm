@@ -40,4 +40,21 @@ var maxProfit2 = function (prices) {
       })
     : 0;
 };
-console.log(maxProfit2([7, 1, 5, 3, 6, 4]));
+
+var maxProfit3 = function(prices) {
+  const res = []
+  for(let i=1;i<prices.length;i++){
+      res.push(prices[i]-prices[i-1])
+  }
+
+  return res.reduce((acc,cur) => {
+    if(cur>0){
+      acc+=cur
+    } else {
+      acc+=0
+    }
+    return acc
+  },0)
+};
+
+console.log(maxProfit3([7, 1, 5, 3, 6, 4]));

@@ -202,6 +202,13 @@ class BST {
     node.size = this._getSize(node.left) + this._getSize(node.right) + 1;
     return node;
   }
+  // 作为普通二叉树的层序插入
+  addNodeTra(value) {
+    this.root = this._addNodeTra(this.root, value);
+  }
+  _addNodeTra(node, value) {
+    
+  }
 }
 
 module.exports = BST;
