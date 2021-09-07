@@ -1,9 +1,9 @@
-function shuffler(array){
-  for(let i=0;i<array.length;i++){
-    let index = Math.floor(Math.random() * (i+1));
-    [array[i],array[index]] = [array[index],array[i]]
+function shuffler(array) {
+  for (let i = 0; i < array.length; i++) {
+    let index = Math.floor(Math.random() * (i + 1));
+    [array[i], array[index]] = [array[index], array[i]];
   }
-  return array
+  return array;
 }
 
-console.log(shuffler([1,2,3,4,5,6]))
+console.log(shuffler([1, 2, 3, 4, 5, 6]));
