@@ -55,6 +55,7 @@ class BST {
     }
     return node;
   }
+  // 递归写法
   midTraversal() {
     const res = [];
     function _midTraversal(node) {
@@ -66,6 +67,28 @@ class BST {
     }
     _midTraversal(this.root);
     return res;
+  }
+  // 非递归写法
+  midTraversal2() {
+    function inorderTraversal(node) {
+      let white = 0;
+      let gray = 1;
+      let res = [];
+      let stack = [[white, node]];
+      while (stack.length) {
+        let [color, node] = stack.pop();
+        if (!node) continue;
+        if (color === white) {
+          stack.push([white, node.right]);
+          stack.push([gray, node]);
+          stack.push([white, node.left]);
+        } else {
+          res.push(node.value);
+        }
+      }
+      return res;
+    }
+    return inorderTraversal(this.root);
   }
   prevTraversal() {
     const res = [];
@@ -79,6 +102,27 @@ class BST {
     _prevTraversal(this.root);
     return res;
   }
+  prevTraversal2() {
+    function preOrderTraversal(node) {
+      let white = 0;
+      let gray = 1;
+      let res = [];
+      let stack = [[white, node]];
+      while (stack.length) {
+        let [color, node] = stack.pop();
+        if (!node) continue;
+        if (color === white) {
+          stack.push([white, node.right]);
+          stack.push([white, node.left]);
+          stack.push([gray, node]);
+        } else {
+          res.push(node.value);
+        }
+      }
+      return res;
+    }
+    return preOrderTraversal(this.root);
+  }
   backTraversal() {
     const res = [];
     function _backTraversal(node) {
@@ -90,6 +134,27 @@ class BST {
     }
     _backTraversal(this.root);
     return res;
+  }
+  backTraversal2() {
+    function backorderTraversal(node) {
+      let white = 0;
+      let gray = 1;
+      let res = [];
+      let stack = [[white, node]];
+      while (stack.length) {
+        let [color, node] = stack.pop();
+        if (!node) continue;
+        if (color === white) {
+          stack.push([gray, node]);
+          stack.push([white, node.right]);
+          stack.push([white, node.left]);
+        } else {
+          res.push(node.value);
+        }
+      }
+      return res;
+    }
+    return backorderTraversal(this.root);
   }
   breadthTraversal() {
     if (!this.root) return null;

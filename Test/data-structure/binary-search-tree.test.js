@@ -14,11 +14,20 @@ bst.addNode(122);
 test('前序遍历', () => {
   expect(bst.prevTraversal()).toEqual([1, -1, -10, -122, -9, 2, 10, 5, 12, 122]);
 });
+test('非递归前序遍历', () => {
+  expect(bst.prevTraversal2()).toEqual([1, -1, -10, -122, -9, 2, 10, 5, 12, 122]);
+});
 test('中序遍历', () => {
   expect(bst.midTraversal()).toEqual([-122, -10, -9, -1, 1, 2, 5, 10, 12, 122]);
 });
+test('非递归中序遍历', () => {
+  expect(bst.midTraversal2()).toEqual([-122, -10, -9, -1, 1, 2, 5, 10, 12, 122]);
+});
 test('后序遍历', () => {
   expect(bst.backTraversal()).toEqual([-122, -9, -10, -1, 5, 122, 12, 10, 2, 1]);
+});
+test('非递归后序遍历', () => {
+  expect(bst.backTraversal2()).toEqual([-122, -9, -10, -1, 5, 122, 12, 10, 2, 1]);
 });
 test('广度遍历', () => {
   expect(bst.breadthTraversal()).toEqual([1, -1, 2, -10, 10, -122, -9, 5, 12, 122]);
