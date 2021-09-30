@@ -57,3 +57,19 @@ function cloneDeep(obj, map = new Map()) {
     return obj;
   }
 }
+
+function cloneDeep(obj, map = new Map()) {
+  if (typeof obj === 'object') {
+    let res = Array.isArray(obj) ? [] : {};
+    if (map.has(obj)) {
+      return map.get(obj);
+    }
+    map.set(obj, res);
+    for (let key in obj) {
+      res[key] = cloneDeep(obj[key], map);
+    }
+    return res;
+  } else {
+    return obj;
+  }
+}

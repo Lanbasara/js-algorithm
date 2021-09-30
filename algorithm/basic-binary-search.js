@@ -28,4 +28,36 @@ function BasicBinarySearch(origin, target) {
   return null;
 }
 
+// 寻找上限
+function BinarySearchUpper(array) {
+  let low = 0;
+  let high = 7;
+  while (low < high) {
+    let mid = Math.ceil(low + (high - low) / 2);
+    console.log(mid);
+    if (array[mid]) {
+      low = mid;
+    } else {
+      high = mid - 1;
+    }
+  }
+  return array[low];
+}
+
+// 寻找下限
+function BinarySearchLower(array) {
+  let low = 0;
+  let high = 7;
+  while (low < high) {
+    let mid = Math.floor(low + (high - low) / 2);
+    console.log(mid);
+    if (array[mid] == 0) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+  return array[high];
+}
+
 module.exports = BasicBinarySearch;
