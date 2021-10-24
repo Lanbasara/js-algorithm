@@ -24,12 +24,7 @@ function mergeSort(array) {
     for (let i = 0; i < help.length; i++) {
       array[start + i] = help[i];
     }
-    return array;
   }
   sort(array, 0, array.length - 1);
   return array;
 }
-
-let a = [3, 2, 6, 5, 7, 1, 0, -10];
-console.log(mergeSort(a));
-console.log(a);
