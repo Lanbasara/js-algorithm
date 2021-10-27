@@ -23,11 +23,14 @@ class MaxHeap {
   isEmpty() {
     return this.size() === 0;
   }
-  add(value) {
+  front() {
+    return this.heap[0];
+  }
+  enqueue(value) {
     this.heap.push(value);
     return this._shiftUp(this.size() - 1);
   }
-  removeMax() {
+  dequeue() {
     return this._shiftDown(0);
   }
   getParentIndex(k) {
@@ -56,4 +59,50 @@ class MaxHeap {
   }
 }
 
-module.exports = MaxHeap;
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
+  size() {
+    return this.heap.length;
+  }
+  isEmpty() {
+    return this.size() === 0;
+  }
+  enqueue(value) {
+    this.heap.push(value);
+    return this._shiftUp(this.size() - 1);
+  }
+  dequeue() {
+    return this._shiftDown(0);
+  }
+  front() {
+    return this.heap[0];
+  }
+  getParentIndex(k) {
+    return parseInt((k - 1) / 2);
+  }
+  getLeftIndex(k) {
+    return parseInt(k * 2 + 1);
+  }
+  _shiftUp(k) {
+    while (this.heap[k] < this.heap[this.getParentIndex(k)]) {
+      [this.heap[k], this.heap[this.getParentIndex(k)]] = [this.heap[this.getParentIndex(k)], this.heap[k]];
+      k = this.getParentIndex(k);
+    }
+  }
+  _shiftDown(k) {
+    [this.heap[k], this.heap[this.heap.length - 1]] = [this.heap[this.heap.length - 1], this.heap[k]];
+    let target = this.heap.pop();
+    while (this.getLeftIndex(k) < this.size()) {
+      let j = this.getLeftIndex(k);
+      if (j + 1 < this.size() && this.heap[j + 1] < this.heap[j]) j++;
+      if (this.heap[k] < this.heap[j]) break;
+      [this.heap[k], this.heap[j]] = [this.heap[j], this.heap[k]];
+      k = j;
+    }
+    return target;
+  }
+}
+
+module.exports = { MaxHeap, MinHeap };
