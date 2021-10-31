@@ -6,6 +6,7 @@
   "author": "Lanbasara <ghkagg@outlook.com>",
   "license": "MIT",
   "dependencies": {
+    "@datastructures-js/priority-queue": "^5.3.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
