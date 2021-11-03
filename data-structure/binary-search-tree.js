@@ -299,4 +299,35 @@ class BST {
   }
 }
 
-module.exports = BST;
+function TreeNode(val, left, right) {
+  this.val = val;
+  left ? (this.left = left) : (this.left = null);
+  right ? (this.right = right) : (this.right = null);
+}
+function transferArrayToTree(array) {
+  if (array.length === 0) return null;
+  let root = new TreeNode(array[0]);
+  let index = 1;
+  let q = [root];
+  while (index < array.length) {
+    let parent = q.shift();
+    if (array[index] !== null) {
+      let node = new TreeNode(array[index]);
+      parent.left = node;
+      q.push(parent.left);
+    }
+    index++;
+    if (array[index] !== null) {
+      let node = new TreeNode(array[index]);
+      parent.right = node;
+      q.push(parent.right);
+    }
+    index++;
+  }
+  return root;
+}
+
+module.exports = {
+  BST,
+  transferArrayToTree,
+};
