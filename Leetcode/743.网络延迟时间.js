@@ -11,55 +11,33 @@
  * @param {number} k
  * @return {number}
  */
-const {MinPriorityQueue} = require('@datastructures-js/priority-queue')
-var networkDelayTime = function(times, n, k) {
-  const graph = {}
+ var networkDelayTime = function(times, n, k) {
+    const INF = Number.MAX_SAFE_INTEGER;
+    const g = new Array(n).fill(INF).map(() => new Array(n).fill(INF));
+    for (const t of times) {
+        const x = t[0] - 1, y = t[1] - 1;
+        g[x][y] = t[2];
+    }
+    console.log(g)
+    const dist = new Array(n).fill(INF);
+    dist[k - 1] = 0;
+    const used = new Array(n).fill(false);
+    for (let i = 0; i < n; ++i) {
+        let x = -1;
+        for (let y = 0; y < n; ++y) {
+            if (!used[y] && (x === -1 || dist[y] < dist[x])) {
+                x = y;
+            }
+        }
+        used[x] = true;
+        for (let y = 0; y < n; ++y) {
+            dist[y] = Math.min(dist[y], dist[x] + g[x][y]);
+        }
+    }
 
-  for(let i=0;i<times.length;i++){
-      let [from,to,dist] = times[i]
-      if(graph[from]){
-          graph[from].push([to,dist])
-      } else {
-          graph[from] = [[to,dist]]
-      }
-  }
-  console.log(graph)
-  let ans = -1;
-  for(let i=1;i<=n;i++){
-      let dist = dijkstra(graph,k,i)
-      if(dist === -1) return -1;
-      ans = Math.max(ans, dist)
-  }
-  return res
-  function dijkstra(graph, start,end){
-      let minHeap = new MinPriorityQueue({priority : res => res[0]})
-      minHeap.enqueue([0,start])
-      let visited = new Set()
-      while(minHeap.size()){
-          let [cost, u] = minHeap.dequeue().element;
-          if(visited.has(u)){
-              continue
-          }
-          visited.add(u);
-          if(u === end){
-              return cost
-          }
-          for(let value of graph[u]){
-              let [v,c] = value
-              if(visited.has(v)){
-                  continue
-              }
-              minHeap.enqueue([
-                  c+cost,
-                  v
-              ])
-          }
-      }
-      return -1
-  }
-
+    let ans = Math.max(...dist);
+    return ans === INF ? -1 : ans;
 };
-
 const times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
 console.log(networkDelayTime(times,n,k))
 // @lc code=end
