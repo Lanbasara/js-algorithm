@@ -19,6 +19,7 @@
  * @param {Node} root
  * @return {Node}
  */
+
 var connect = function (root) {
   if (!root) return null;
   function BFS(node) {
