@@ -1,4 +1,4 @@
-const BST = require('../../data-structure/binary-search-tree');
+const { BST } = require('../../data-structure/binary-search-tree');
 console.log('二分搜索树测试，数据导入');
 const bst = new BST();
 bst.addNode(1);
@@ -53,6 +53,7 @@ test('排名', () => {
   expect(bst.select(1)).toBe(-10);
   expect(bst.select(3)).toBe(-1);
   expect(bst.select(6)).toBe(5);
+  expect(bst.select(5)).toBe(2);
 });
 
 test('删除最大值', () => {
