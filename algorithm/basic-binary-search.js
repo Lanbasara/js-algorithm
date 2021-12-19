@@ -60,4 +60,9 @@ function BinarySearchLower(array) {
   return array[high];
 }
 
+/**
+ * 可以统一为: 二分边界寻找
+ * https://codesandbox.io/s/dazzling-estrela-qh3py?file=/script.js
+ */
+
 module.exports = BasicBinarySearch;

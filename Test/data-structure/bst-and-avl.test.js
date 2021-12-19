@@ -126,6 +126,16 @@ test('rank', () => {
   expect(bst1.getRank(122)).toBe(12);
 });
 
+test('删除最小节点', () => {
+  expect(bst1.size).toBe(13);
+  console.log('before', bst1.root.left.size);
+  bst1.deleteMin();
+  expect(bst1.getMin().value).toBe(-10);
+  expect(bst1.size).toBe(12);
+  console.log('after', bst1.root.left.size);
+  debugger;
+});
+
 const bst2 = new BST();
 bst2.addNode(4);
 bst2.addNode(3);

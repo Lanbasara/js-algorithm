@@ -207,7 +207,7 @@ class BST {
   }
 
   /**
-   * 获取节点
+   * 获取节点Size
    * @param {*} node
    * @returns
    */
@@ -270,6 +270,20 @@ class BST {
     } else {
       return this.getNode(node.right, value);
     }
+  }
+
+  /**
+   * 删除最大/最小值
+   */
+  deleteMin() {
+    this.root = this._deleteMin(this.root);
+    this.size--;
+  }
+  _deleteMin(node) {
+    if (node && !node.left) return node.right;
+    node.left = this._deleteMin(node.left);
+    node.size = this._getSize(node.left) + this._getSize(node.right) + 1;
+    return node;
   }
 }
 
