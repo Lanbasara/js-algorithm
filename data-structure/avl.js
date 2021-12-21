@@ -99,5 +99,8 @@ avl.addNode(6);
 avl.addNode(1);
 avl.addNode(3);
 avl.addNode(0);
+avl.addNode(7);
+avl.addNode(8);
+avl.addNode(9);
 debugger;
 module.exports = AVL;

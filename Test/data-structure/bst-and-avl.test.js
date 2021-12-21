@@ -1,4 +1,4 @@
-const { BST } = require('../../data-structure/bst-and-avl');
+const { BST, AVL } = require('../../data-structure/bst-and-avl');
 const bst = new BST();
 bst.addNode(1);
 bst.addNode(-1);
@@ -133,7 +133,37 @@ test('删除最小节点', () => {
   expect(bst1.getMin().value).toBe(-10);
   expect(bst1.size).toBe(12);
   console.log('after', bst1.root.left.size);
-  debugger;
+});
+
+test('删除最大节点', () => {
+  expect(bst1.size).toBe(12);
+  expect(bst1.getMax().value).toBe(122);
+  bst1.deleteMax();
+  expect(bst1.getMax().value).toBe(12);
+  expect(bst1.size).toBe(11);
+  bst1.deleteMax();
+  expect(bst1.getMax().value).toBe(10);
+});
+
+test('删除任意节点', () => {
+  const bst1 = new BST();
+  bst1.addNode(1);
+  bst1.addNode(-1);
+  bst1.addNode(0);
+  bst1.addNode(2);
+  bst1.addNode(2);
+  bst1.addNode(2);
+  bst1.addNode(10);
+  bst1.addNode(5);
+  bst1.addNode(12);
+  bst1.addNode(122);
+  bst1.addNode(-10);
+  bst1.addNode(-122);
+  bst1.addNode(-9);
+  expect(bst1.size).toBe(13);
+  expect(bst1.getMax().value).toBe(122);
+  bst1.deleteNode(10);
+  expect(bst1.getNode(undefined, 2).right.value).toBe(12);
 });
 
 const bst2 = new BST();
@@ -147,4 +177,67 @@ test('ceil', () => {
 
 test('upperBounder', () => {
   expect(bst2.upperBounder(undefined, 5).value).toBe(6);
+});
+
+const avl = new AVL();
+test('avl测试', () => {
+  /**
+   * [0,1,2,3,5,6,7,8]
+   */
+  avl.addNode(5);
+  expect(avl.root.value).toBe(5);
+  avl.addNode(2);
+  expect(avl.root.value).toBe(5);
+  avl.addNode(6);
+  expect(avl.root.value).toBe(5);
+  avl.addNode(1);
+  expect(avl.root.value).toBe(5);
+  avl.addNode(3);
+  expect(avl.root.value).toBe(5);
+  avl.addNode(0);
+  // expect(avl.root.value).toBe(2);
+  expect(avl.root.left.height - avl.root.right.height).toBeLessThan(1);
+  avl.addNode(7);
+  expect(avl.root.left.height - avl.root.right.height).toBeLessThan(1);
+  expect(avl.root.value).toBe(2);
+  avl.addNode(8);
+  expect(avl.root.left.height - avl.root.right.height).toBeLessThan(1);
+  expect(avl.root.value).toBe(2);
+  expect(avl.root.size).toBe(8);
+  // 中序遍历
+  expect(avl.midTraversal(avl.root)).toEqual([0, 1, 2, 3, 5, 6, 7, 8]);
+  // 前序遍历
+  expect(avl.prevTraversal(avl.root)).toEqual([2, 1, 0, 5, 3, 7, 6, 8]);
+  // 后序遍历
+  expect(avl.postTraversal(avl.root)).toEqual([0, 1, 3, 6, 8, 7, 5, 2]);
+  // 删除最小值
+  // avl.deleteMin();
+  // avl.deleteMin();
+  // expect(avl.root.value).toBe(5);
+  // 删除最大值
+  // avl.deleteMax();
+  // avl.deleteMax();
+  // avl.deleteMax();
+  // avl.deleteMax();
+  // avl.deleteMax();
+  // expect(avl.root.value).toBe(1);
+  // 删除任意节点
+  avl.deleteNode(3);
+  expect(avl.root.value).toBe(2);
+  avl.deleteNode(0);
+  expect(avl.root.value).toBe(5);
+  avl.addNode(9);
+  avl.addNode(10);
+  expect(avl.root.value).toBe(5);
+  expect(avl.root.right.right.value).toBe(9);
+  expect(avl.root.size).toBe(8);
+  expect(avl.root.height).toBe(4);
+  expect(avl.getRank(1)).toBe(0);
+  expect(avl.getRank(2)).toBe(1);
+  expect(avl.getRank(5)).toBe(2);
+  expect(avl.getRank(6)).toBe(3);
+  expect(avl.getRank(7)).toBe(4);
+  expect(avl.getRank(8)).toBe(5);
+  expect(avl.getRank(9)).toBe(6);
+  expect(avl.getRank(10)).toBe(7);
 });
