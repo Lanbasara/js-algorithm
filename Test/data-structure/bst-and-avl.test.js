@@ -1,4 +1,4 @@
-const { BST, AVL } = require('../../data-structure/bst-and-avl');
+const { BST, AVL, AVLTree } = require('../../data-structure/bst-and-avl');
 const bst = new BST();
 bst.addNode(1);
 bst.addNode(-1);
@@ -182,7 +182,7 @@ test('upperBounder', () => {
 const avl = new AVL();
 test('avl测试', () => {
   /**
-   * [0,1,2,3,5,6,7,8]
+   * [0,1,2,3,5,6,7,8,9,10]
    */
   avl.addNode(5);
   expect(avl.root.value).toBe(5);
@@ -234,10 +234,57 @@ test('avl测试', () => {
   expect(avl.root.height).toBe(4);
   expect(avl.getRank(1)).toBe(0);
   expect(avl.getRank(2)).toBe(1);
+  expect(avl.getRank(3)).toBe(2);
   expect(avl.getRank(5)).toBe(2);
   expect(avl.getRank(6)).toBe(3);
   expect(avl.getRank(7)).toBe(4);
   expect(avl.getRank(8)).toBe(5);
   expect(avl.getRank(9)).toBe(6);
   expect(avl.getRank(10)).toBe(7);
+  expect(avl.getRank(11)).toBe(8);
+  expect(avl.getRank(12)).toBe(8);
+  expect(avl.lessThan(1)).toBe(0);
+  expect(avl.lessThan(2)).toBe(1);
+  expect(avl.lessThan(3)).toBe(2);
+  expect(avl.lessThan(5)).toBe(2);
+  expect(avl.lessThan(6)).toBe(3);
+  expect(avl.lessThan(7)).toBe(4);
+  expect(avl.lessThan(8)).toBe(5);
+  expect(avl.lessThan(9)).toBe(6);
+  expect(avl.lessThan(10)).toBe(7);
+  expect(avl.lessThan(12)).toBe(8);
+  /**
+   * [1,3,5,6,7,8,9,10]
+   */
+  expect(avl.moreThan(10)).toBe(0);
+  expect(avl.moreThan(9)).toBe(1);
+  expect(avl.moreThan(8)).toBe(2);
+  expect(avl.moreThan(7)).toBe(3);
+  expect(avl.moreThan(6)).toBe(4);
+  expect(avl.moreThan(5)).toBe(5);
+  expect(avl.moreThan(4)).toBe(6);
+  expect(avl.moreThan(3)).toBe(6);
+  expect(avl.moreThan(2)).toBe(6);
+  expect(avl.moreThan(1)).toBe(7);
+  expect(avl.moreThan(0)).toBe(8);
+  expect(avl.moreThan(-1)).toBe(8);
+  expect(avl.moreThan(-2)).toBe(8);
+  expect(avl.moreThan(11)).toBe(0);
+});
+
+test('对比两个AVL实现', () => {
+  const avl = new AVL();
+  const tree = new AVLTree();
+  /**
+   * nums = [0,0]
+   */
+  avl.addNode(0);
+  avl.addNode(0);
+  tree.insert(0);
+  tree.insert(0);
+  console.log('avl lessThan 0', avl.lessThan(0));
+  console.log('tree lessThan 0', tree.lessThan(0));
+  console.log('avl moreThan 0', avl.moreThan(0));
+  console.log('tree moreThan 0', tree.moreThan(0));
+  console.log(avl.floor(undefined, 0));
 });
