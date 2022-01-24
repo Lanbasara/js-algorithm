@@ -50,6 +50,36 @@
  console.log(dp)
  return dp[n]
 };
+
+var nthSuperUglyNumber = function(n, primes) {
+    let dp = new Array(n).fill(0);
+    dp[1] = 1;
+    let pointer = primes.map((item) => {
+      return {
+        v : item,
+        p : 1
+      }
+    })
+    for(let i=2;i<=n;i++){
+      let tempMax = Infinity;
+      for(let po of pointer){
+        let { v, p } = po;
+        let temp = v * dp[p];
+        tempMax = Math.min(tempMax, temp)
+      }
+
+      dp[i] = tempMax
+  
+      for(let po of pointer){
+        let { v, p } = po;
+        let temp = v * dp[p];
+        if(tempMax === temp){
+          po.p = p + 1
+        }
+      }
+    }
+    return dp[n]
+  };
 const n = 12, primes = [2,7,13,19]
 console.log(nthSuperUglyNumber(12,primes))
 // @lc code=end

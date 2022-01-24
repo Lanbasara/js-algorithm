@@ -43,7 +43,7 @@ function cloneDeep(obj, map = new Map()) {
     }
     return typeof target === 'object';
   }
-  if (isObject) {
+  if (isObject(obj)) {
     let res = Array.isArray(obj) ? [] : {};
     if (map.get(obj)) {
       return map.get(obj);
@@ -53,6 +53,28 @@ function cloneDeep(obj, map = new Map()) {
       res[key] = cloneDeep(obj[key], map);
     }
     return res;
+  } else {
+    return obj;
+  }
+}
+
+function cloneDeep(obj, map = new Map()) {
+  function isObject(obj) {
+    if (!obj) {
+      return false;
+    } else {
+      return typeof obj === 'object';
+    }
+  }
+  if (isObject(obj)) {
+    let res = Array.isArray(obj) ? [] : {};
+    if (map.has(obj)) {
+      return map.get(obj);
+    }
+    map.set(obj, res);
+    for (let key in obj) {
+      res[key] = cloneDeep(obj[key], map);
+    }
   } else {
     return obj;
   }

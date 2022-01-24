@@ -618,23 +618,41 @@ class AVL {
    * @return : rank
    * 参考: https://stackoverflow.com/questions/26080924/computing-rank-of-a-node-in-a-binary-search-tree
    */
+  // getRank(value) {
+  //   let rank = 0;
+  //   let node = this.root;
+  //   while (node) {
+  //     if (value < node.value) {
+  //       node = node.left;
+  //     } else if (value > node.value) {
+  //       let leftSize = node.left ? node.left.size : 0;
+  //       rank += 1 + leftSize;
+  //       node = node.right;
+  //     } else {
+  //       let leftSize = node.left ? node.left.size : 0;
+  //       rank += leftSize;
+  //       break;
+  //     }
+  //   }
+  //   return rank;
+  // }
   getRank(value) {
-    let rank = 0;
+    let res = 0;
     let node = this.root;
     while (node) {
-      if (value < node.value) {
+      if (node.value > value) {
         node = node.left;
-      } else if (value > node.value) {
+      } else if (node.value < value) {
         let leftSize = node.left ? node.left.size : 0;
-        rank += 1 + leftSize;
+        res += 1 + leftSize;
         node = node.right;
       } else {
         let leftSize = node.left ? node.left.size : 0;
-        rank += leftSize;
+        res += leftSize;
         break;
       }
     }
-    return rank;
+    return res;
   }
   lessThan(value) {
     var node = this.root;
