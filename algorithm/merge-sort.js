@@ -28,3 +28,4 @@ function mergeSort(array) {
   sort(array, 0, array.length - 1);
   return array;
 }
+console.log(mergeSort([1, 5, 2, 4, 2]));
