@@ -10,38 +10,28 @@
  * @param {number} k
  * @return {number[]}
  */
- var topKFrequent = function(nums, k) {
-  let map = new Map()
-  nums.forEach(item => {
-      if(map.has(item)){
-          map.set(item, map.get(item)+1)
-      } else {
-          map.set(item,1)
-      }
-  })
-  let minHeap = new MinPriorityQueue({priority: res => res.freq})
-
-  for(let [key,value] of map){
-      if(minHeap.size()<k){
-          minHeap.enqueue({
-              freq : value,
-              value : key
-          })
-      } else {
-          if(value > minHeap.front().element.freq){
-              minHeap.dequeue()
-              minHeap.enqueue({
-              freq : value,
-              value : key
-              })
-          }
-      }
+const { MinPriorityQueue } = require('@datastructures-js/priority-queue');
+var topKFrequent = function (nums, k) {
+  let minHeap = new MinPriorityQueue();
+  let record = {};
+  for (let num of nums) {
+    record[num] = (record[num] || 0) + 1;
   }
-  let res = []
-  while(minHeap.size()){
-      res.push(minHeap.dequeue().element.value)
+  for (let key in record) {
+    if (minHeap.size() < k) {
+      minHeap.enqueue(key, record[key]);
+    } else {
+      if (record[key] > minHeap.front().priority) {
+        minHeap.dequeue();
+        minHeap.enqueue(key, record[key]);
+      }
+    }
   }
-  return res
+  let res = [];
+  while (minHeap.size()) {
+    res.push(minHeap.dequeue().element);
+  }
+  return res;
 };
+console.log(topKFrequent([4, 1, -1, 2, -1, 2, 3], 2));
 // @lc code=end
-
