@@ -1,29 +1,37 @@
-function debounce(fn, delay, immediate = false) {
-  let timer = null;
+/**
+ * debounce: 防抖
+ * 控制函数的调用频率。 让函数的实际掉用，按照固定的时间间隔掉用。 如果两次掉用发生在间隔时间之间，则忽略前一次掉用。直到等待指定时间
+ * 可以传入参数
+ * 可以设置立即调用
+ * 支持取消
+ */
+function debounce(fn, delay, immediate) {
+  let timer;
   let res;
-  let returnFn = function () {
+  let resFn = function () {
     let context = this;
-    let param = arguments;
-    // key
+    let params = Array.from(arguments);
     if (timer) clearTimeout(timer);
     if (immediate) {
       let canCall = !timer;
       timer = setTimeout(() => {
         timer = null;
       }, delay);
-      if (canCall) res = fn.apply(context, param);
+      if (canCall) res = fn.apply(context, params);
     } else {
       timer = setTimeout(() => {
-        fn.apply(context, param);
+        res = fn.apply(context, params);
       }, delay);
     }
     return res;
   };
-  returnFn.cancel = function () {
+
+  resFn.cancel = function () {
     clearTimeout(timer);
     timer = null;
   };
-  return returnFn;
+
+  return resFn;
 }
 
 test('debounce', () => {
