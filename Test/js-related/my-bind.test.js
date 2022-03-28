@@ -1,25 +1,13 @@
 /**
- * 1. 返回函数
- * 2. 参数可以被分为2次传入
- * 2. 可以使用new
+ * bind: 返回绑定了指定this的方法
+ * 可以分2次传入参数
+ * 返回的函数也可以作为构造函数调用，这时候绑定的this失效，效果等于直接调用原函数作为构造函数
  */
-// Function.prototype.bind2 = function (context, ...params) {
-//   context.fn = this;
-//   let fn = function () {};
-//   let resFn = function () {
-//     let args = params.concat(Array.from(arguments));
-//     return context.fn.apply(new.target ? this : context, args);
-//   };
-//   fn.prototype = this.prototype;
-//   resFn.prototype = new fn();
-//   return resFn;
-// };
-
 Function.prototype.bind2 = function (context, ...params) {
   context.fn = this;
   let fn = function () {};
   let resFn = function () {
-    const args = params.concat(Array.from(arguments));
+    let args = params.concat(Array.from(arguments));
     return context.fn.apply(new.target ? this : context, args);
   };
   fn.prototype = this.prototype;
