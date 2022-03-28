@@ -55,8 +55,9 @@ var solveNQueens = function (n) {
       if (temp[i].indexOf('Q') === -1) {
         return [];
       }
-      res.push(temp[i].join());
+      res.push(temp[i].join(''));
     }
+    return res;
   }
   let res = [];
 
@@ -82,4 +83,5 @@ var solveNQueens = function (n) {
 
   return res;
 };
+console.log(solveNQueens(3));
 // @lc code=end
