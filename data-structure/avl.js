@@ -25,7 +25,7 @@ class AVL {
   }
   addNode(v) {
     this.root = this._addNode(this.root, v);
-    console.log('sdadad');
+    console.log('sssss');
   }
   _addNode(node, v) {
     if (!node) {
