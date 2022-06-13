@@ -64,6 +64,6 @@ const root = {
   },
 };
 const p = root.left;
-const q = root.right.right;
+const q = root.right;
 console.log(lowestCommonAncestor(root, p, q));
 // @lc code=end
