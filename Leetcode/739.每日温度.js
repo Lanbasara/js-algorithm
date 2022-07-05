@@ -17,29 +17,27 @@
  * @param {number[]} temperatures
  * @return {number[]}
  */
- class MonoStack{
-    constructor(source){
-        this.list = []
-        this.res = new Array(source.length).fill(0)
-        this.source = [...source]
-    }
-    enqueue(val){
-        let back = this.list[this.list.length-1]
-        while(this.source[back] !== undefined && this.source[val] > this.source[back]){
-            let temp = this.list.pop()
-            this.res[temp] = val -temp
-            back = this.list[this.list.length-1]
-        }
-        this.list.push(val)
-    }
-}
 var dailyTemperatures = function(temperatures) {
-    let mono = new MonoStack(temperatures)
-    for(let i=0;i<temperatures.length;i++){
-        mono.enqueue(i)
+   let res = new Array(temperatures.length).fill(0)
+   let stack = [0]
+
+   for(let i=1;i<temperatures.length;i++){
+    if(temperatures[i]<temperatures[stack[stack.length-1]]){
+        stack.push(i)
+    } else if(temperatures[i]===temperatures[stack[stack.length-1]]){
+        // stack.pop()
+        stack.push(i)
+    } else {
+        while(stack.length && temperatures[i]>temperatures[stack[stack.length-1]]){
+            let r = i
+            let l = stack.pop()
+            res[l] = r - l
+        }
+        stack.push(i)
     }
-    return mono.res
+   }
+
+   return res
 };
-console.log(dailyTemperatures([73,74,75,71,69,72,76,73]))
 // @lc code=end
 

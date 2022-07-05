@@ -5,34 +5,65 @@
  * 可以设置立即调用
  * 支持取消
  */
-function debounce(fn, delay, immediate) {
-  let timer;
+// function debounce(fn, delay, immediate) {
+//   let timer;
+//   let res;
+//   let resFn = function () {
+//     let context = this;
+//     let params = Array.from(arguments);
+//     if (timer) clearTimeout(timer);
+//     if (immediate) {
+//       let canCall = !timer;
+//       timer = setTimeout(() => {
+//         timer = null;
+//       }, delay);
+//       if (canCall) res = fn.apply(context, params);
+//     } else {
+//       timer = setTimeout(() => {
+//         res = fn.apply(context, params);
+//       }, delay);
+//     }
+//     return res;
+//   };
+
+//   resFn.cancel = function () {
+//     clearTimeout(timer);
+//     timer = null;
+//   };
+
+//   return resFn;
+// }
+
+
+function debounce(fn,delay,immediate=false){
+  let timer = null;
   let res;
-  let resFn = function () {
-    let context = this;
-    let params = Array.from(arguments);
-    if (timer) clearTimeout(timer);
-    if (immediate) {
-      let canCall = !timer;
+
+  let resFn = function(){
+    let context = this
+    let params = Array.from(arguments)
+    if(timer) clearTimeout(timer)
+    if(immediate){
+      let canCall = !timer
       timer = setTimeout(() => {
-        timer = null;
-      }, delay);
-      if (canCall) res = fn.apply(context, params);
+        timer = null
+      },delay)
+      if(canCall) res = fn.apply(context, params)
     } else {
       timer = setTimeout(() => {
-        res = fn.apply(context, params);
-      }, delay);
+        res = fn.apply(context, params)
+      },delay)
     }
-    return res;
-  };
+  }
 
-  resFn.cancel = function () {
-    clearTimeout(timer);
-    timer = null;
-  };
+  resFn.cancel = function(){
+    clearTimeout(timer)
+    timer = null
+  }
 
-  return resFn;
+  return resFn
 }
+
 
 test('debounce', () => {
   // 启用定时器模拟器
