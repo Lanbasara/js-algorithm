@@ -18,52 +18,47 @@
  * @return {void} Do not return anything, modify root in-place instead.
  */
 var recoverTree = function (root) {
-  function mid(node) {
-    let res = [];
-    function _mid(node) {
-      if (node) {
-        _mid(node.left);
-        res.push(node.val);
-        _mid(node.right);
-      }
-    }
-    _mid(node);
-    return res;
-  }
-  const arr = mid(root);
-  function check(array) {
-    let res = [];
-    for (let i = 0; i < array.length - 1; i++) {
-      if (array[i] > array[i + 1]) {
-        res.push([array[i], array[i + 1]]);
-      }
-    }
-    if (res.length === 1) {
-      return [res[0][0], res[0][1]];
-    }
-    if (res.length === 2) {
-      return [res[0][0], res[1][1]];
-    }
-  }
-  const [x, y] = check(arr);
+  let arr = []
 
-  let count = 0;
-  function dfs(node) {
-    if (!node) return;
-    if (count === 2) {
-      return;
-    }
-    if (node.val === x) {
-      node.val = y;
-      count++;
-    } else if (node.val === y) {
-      node.val = x;
-      count++;
-    }
-    dfs(node.left);
-    dfs(node.right);
+  function inorder(node){
+    if(!node) return
+    inorder(node.left)
+    arr.push(node.val)
+    inorder(node.right)
   }
-  dfs(root);
-  return root;
+  inorder(root)
+  console.log('arr is',arr)
+
+  function find(arr){
+    let res = []
+
+    for(let i=1;i<arr.length;i++){
+      if(arr[i]<arr[i-1]){
+        res.push([arr[i-1],arr[i]])
+      }
+    }
+
+    if(res.length === 2){
+      return [res[0][0],res[1][1]]
+    }
+
+    return res[0]
+  }
+
+  let [x,y] = find(arr)
+  console.log('[x,y] is',[x,y])
+  function prevOrder(node){
+    if(!node) return
+    if(node.val === x){
+      node.val = y
+    } else if(node.val === y){
+      node.val = x
+    }
+    prevOrder(node.left)
+    prevOrder(node.right)
+  }
+
+  prevOrder(root)
+  return root
 };
 // @lc code=end
