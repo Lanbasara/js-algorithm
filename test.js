@@ -1,55 +1,40 @@
-class MinHeap {
-  constructor() {
-    this.heap = [];
-  }
-  size() {
-    return this.heap.length;
-  }
-  isEmpty() {
-    return this.size() === 0;
-  }
-  getParentIndex(index) {
-    return parseInt((index - 1) / 2);
-  }
-  getLeftIndex(index) {
-    return parseInt(index * 2 + 1);
-  }
-  enqueue(value) {
-    this.heap.push(value);
-    this._shiftUp(this.size() - 1);
-  }
-  dequeue() {
-    return this._shiftDown(0);
-  }
-  front() {
-    return this.heap[0];
-  }
-  _shiftUp(index) {
-    let k = index;
-    while (this.heap[this.getParentIndex(k)][0] > this.heap[k][0]) {
-      [this.heap[this.getParentIndex(k)], this.heap[k]] = [this.heap[k], this.heap[this.getParentIndex(k)]];
-      k = this.getParentIndex(k);
-    }
-  }
-  _shiftDown(index) {
-    [this.heap[index], this.heap[this.size() - 1]] = [this.heap[this.size() - 1], this.heap[index]];
-    let res = this.heap.pop();
-    while (this.getLeftIndex(index) < this.size()) {
-      let j = this.getLeftIndex(index);
-      if (j + 1 < this.size() && this.heap[j + 1][0] < this.heap[j][0]) j++;
-      if (this.heap[index][0] < this.heap[j][0]) break;
-      [this.heap[index], this.heap[j]] = [this.heap[j], this.heap[index]];
-      index = j;
-    }
-    return res;
-  }
+function sleep(delay = 3000) {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res();
+    }, delay);
+  });
 }
 
-const minHeap = new MinHeap();
-const a = [[5], [2], [3], [1], [4]];
-a.forEach((item) => {
-  minHeap.enqueue(item);
-});
-console.log(minHeap.dequeue());
-console.log(minHeap.dequeue());
-console.log(minHeap.dequeue());
+async function sendMultipleRequest(urlList, windowSize = 5) {
+  function createReq(url) {
+    return fetch(url)
+      .then((res) => res.json())
+      .then((res) => res?.message);
+  }
+  let len = Math.ceil(urlList.length / windowSize);
+  let resList = new Array(len).fill(0).map(() => new Array());
+
+  for (let i = 0; i < urlList.length; i++) {
+    let groupIndex = Math.floor(i / windowSize);
+    resList[groupIndex].push(createReq(urlList[i]));
+  }
+  let infos = [];
+
+  for (let i = 0; i < resList.length; i++) {
+    let res = await Promise.all(resList[i]);
+    await sleep();
+    infos = infos.concat([...res]);
+  }
+  return infos;
+}
+
+(async function () {
+  const url = "https://dog.ceo/api/breeds/image/random";
+  let res = await sendMultipleRequest(new Array(7).fill(url), 3);
+  console.log("batch res is", res);
+})();
+
+
+
+
