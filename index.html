@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<div id="outer">
+		outer
+		<div id="inner">Inner</div>
+	</div>
+</body>
+<script>
+	const outer = document.getElementById('outer')
+	const inner = document.getElementById('inner')
+	outer.addEventListener('click',function(e){
+		console.log('outer Click')
+		console.assert(this === outer, 'this is outer')
+		console.assert(e.target === outer, 'e.target is outer')
+	})
+
+	inner.addEventListener('click',() => {
+		console.log('inner Click')
+	})
+	document.addEventListener('click',() => {
+		console.log('document Click')
+	},true)
+</script>
+</html>

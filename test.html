@@ -1,0 +1,80 @@
+<style>
+    div{
+        color: red !important
+    }
+</style>
+
+<div id='test'><b>Hello</b> I'm ninga</div>
+<div id='test2'>2</div>
+<div id="none">
+    <div>DISPLAY-NONE</div>
+    <div>DISPLAY-NONE</div>
+    <div>DISPLAY-NONE</div>
+    <div>DISPLAY-NONE</div>
+    <div>DISPLAY-NONE</div>
+</div>
+<div id="style" style="color:blue">Style test</div>
+<script>
+    function getNodes(htmlString, doc, fragment) {
+        const map = {
+            "<td": [3, "<table><tbody><tr>", "</tr></tbody></table>"],
+            "<th": [3, "<table><tbody><tr>", "</tr></tbody></table>"],
+            "<tr": [2, "<table><thead>", "</thead></table>"],
+            "<option": [1, "<select multiple>", "</select>"],
+            "<optgroup": [1, "<select multiple>", "</select>"],
+            "<legend": [1, "<fieldset>", "</fieldset>"],
+            "<thead": [1, "<table>", "</table>"],
+            "<tbody": [1, "<table>", "</table>"],
+            "<tfoot": [1, "<table>", "</table>"],
+            "<colgroup": [1, "<table>", "</table>"],
+            "<caption": [1, "<table>", "</table>"],
+            "<col": [2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"]
+        };
+        const targName = htmlString.match(/<\w+/)
+        let mapEntry = targName ? map[targName[0]] : null
+        if (!mapEntry) {
+            mapEntry = [0, ' ', ' ']
+        }
+        let div = (doc || document).createElement('div')
+        div.innerHTML = mapEntry[1] + htmlString + mapEntry[2];
+        if (fragment) {
+            while (div.firstChild) {
+                fragment.appendChild(div.firstChild)
+            }
+        }
+        return div.childNodes;
+
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        function root(elem, cur) {
+			  return elem.nodeName.toLowerCase() === "table" &&
+			      cur.nodeName.toLowerCase() === "tr" ?
+			      (elem.getElementsByTagName("tbody")[0] ||
+			          elem.appendChild(elem.ownerDocument.createElement("tbody"))) : elem;
+			}
+        function insert(elems, args, callback) {
+            if (elems.length) {
+                const doc = elems[0].ownerDocument || elems[0]
+                fragment = doc.createDocumentFragment()
+                scripts = getNodes(args, doc, fragment)
+                first = fragment.firstChild;
+                // clone节点
+                const clone = fragment.cloneNode(true)
+                if (first) {
+                    for (let i = 0; elems[i]; i++) {
+                        callback.call(root(elems[i], first), i > 0 ? clone : fragment)
+                    }
+                }
+            }
+        }
+        const divs = document.querySelectorAll('div')
+
+        insert(divs, "<b>Name:</b>", function(fragment){
+            this.appendChild(fragment)
+        })
+        insert(divs, "<span>First</span> <span>Last</span>", function(fragment){
+            this.parentNode.insertBefore(fragment,this)
+        })
+    })
+</script>
+<script src="./test.js"></script>
