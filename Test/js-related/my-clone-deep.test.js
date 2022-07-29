@@ -30,6 +30,48 @@ function cloneDeep(obj, map = new WeakMap()) {
   }
 }
 
+
+// 复习深拷贝
+function cloneDeep(obj,map = new WeakMap()){
+  function checkObj(obj){
+    if(obj === null){
+      return false
+    }
+    return typeof obj === 'object'
+  }
+
+  if(typeof obj !== "object") return
+  let res = Array.isArray(obj) ? [] : {}
+  if(map.has(obj)){
+    return map.get(obj,res)
+  }
+  map.set(obj,res)
+  for(let key in obj){
+    if(Object.prototype.hasOwnProperty.call(obj,key)){
+      if(checkObj(obj[key])){
+        res[key] = cloneDeep(obj[key],map)
+      } else {
+        res[key] = obj[key]
+      }
+    }
+  }
+  return res
+}
+
+let a = {
+  fun : function(){},
+  test : null,
+  a : 1,
+  b : 2,
+  c : [1,2,3,4],
+  d : {
+      d : 1,
+      e : 2
+  }
+}
+a.origin = a
+let aa = cloneDeep(a)
+
 it('深拷贝测试', () => {
   const target = {
     field1: 1,
