@@ -7,54 +7,80 @@
  * 2. 如果是对象，则遍历递归
  * 3. 不是则直接返回
  */
-function cloneDeep(obj, map = new WeakMap()) {
-  function isObject(obj) {
-    if (!obj) {
-      return false;
-    } else {
-      return typeof obj === 'object';
-    }
+// function cloneDeep(obj, map = new WeakMap()) {
+//   function isObject(obj) {
+//     if (!obj) {
+//       return false;
+//     } else {
+//       return typeof obj === 'object';
+//     }
+//   }
+//   if (isObject(obj)) {
+//     let res = Array.isArray(obj) ? [] : {};
+//     if (map.has(obj)) {
+//       return map.get(obj);
+//     }
+//     map.set(obj, res);
+//     for (let key in obj) {
+//       res[key] = cloneDeep(obj[key], map);
+//     }
+//     return res;
+//   } else {
+//     return obj;
+//   }
+// }
+
+
+// // 复习深拷贝
+// function cloneDeep(obj,map = new WeakMap()){
+//   function checkObj(obj){
+//     if(obj === null){
+//       return false
+//     }
+//     return typeof obj === 'object'
+//   }
+
+//   if(typeof obj !== "object") return
+//   let res = Array.isArray(obj) ? [] : {}
+//   if(map.has(obj)){
+//     return map.get(obj,res)
+//   }
+//   map.set(obj,res)
+//   for(let key in obj){
+//     if(Object.prototype.hasOwnProperty.call(obj,key)){
+//       if(checkObj(obj[key])){
+//         res[key] = cloneDeep(obj[key],map)
+//       } else {
+//         res[key] = obj[key]
+//       }
+//     }
+//   }
+//   return res
+// }
+
+
+function isObject(obj){
+  if(obj == null){
+    return false 
   }
-  if (isObject(obj)) {
-    let res = Array.isArray(obj) ? [] : {};
-    if (map.has(obj)) {
-      return map.get(obj);
-    }
-    map.set(obj, res);
-    for (let key in obj) {
-      res[key] = cloneDeep(obj[key], map);
-    }
-    return res;
-  } else {
-    return obj;
-  }
+  return typeof obj === 'object'
 }
 
-
-// 复习深拷贝
-function cloneDeep(obj,map = new WeakMap()){
-  function checkObj(obj){
-    if(obj === null){
-      return false
-    }
-    return typeof obj === 'object'
-  }
-
-  if(typeof obj !== "object") return
+function cloneDeep(obj, map = new WeakMap()){
   let res = Array.isArray(obj) ? [] : {}
   if(map.has(obj)){
-    return map.get(obj,res)
+    return map.get(obj)
   }
   map.set(obj,res)
+
   for(let key in obj){
-    if(Object.prototype.hasOwnProperty.call(obj,key)){
-      if(checkObj(obj[key])){
-        res[key] = cloneDeep(obj[key],map)
-      } else {
-        res[key] = obj[key]
-      }
+    if(isObject(obj[key])){
+      res[key] = cloneDeep(obj[key], map)
+    } else {
+      res[key] = obj[key]
     }
   }
+
   return res
 }
 
