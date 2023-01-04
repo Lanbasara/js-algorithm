@@ -6,13 +6,13 @@
 因此整数的范围是 -2^31 -- 2^31
 
 ## 2. 进制转换调试
-1. Number.prototype.toString(index)
+1. Number.prototype.toString(index)
 2. parseInt('String', 2)
 3. padStart(32,'0)
 
 ## 3. 原码，反码，补码
 1. 对正整数都一样
-2. 反码：符号位保持不变，数字位逐个取反
+2. 反码：符号位保持不变，数字位逐个取反
 3. 在反码的基础上，加一
 
 ## 位运算操作符
