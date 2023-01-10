@@ -63,25 +63,31 @@
  * @return {TreeNode}
  */
 var balanceBST = function(root) {
-    let arr = []
+    // Step1: Use mid-order traversal for bst
+    const inorderRes = []
     function inorder(node){
         if(!node) return
-        inorder(node.left)
-        arr.push(node.val)
-        inorder(node.right)
+        if(node.left) inorder(node.left)
+        inorderRes.push(node.val)
+        if(node.right) inorder(node.right)
     }
     inorder(root)
-    console.log('arr is',arr)
-    function buildTree(arr){
-        if(!arr.length) return null
-        let mid = Math.floor((arr.length-1)/2)
-        let root = new TreeNode(arr[mid])
-        root.left = buildTree(arr.slice(0,mid))
-        root.right = buildTree(arr.slice(mid+1))
+
+    // Step2: Build avl tree according to mid-order result
+    function buildTree(array){
+        if(!array.length) return null
+        let midIndex = Math.floor(0+(array.length-1)/2)
+        let midValue = array[midIndex]
+        let root = new TreeNode(midValue)
+        let leftPart = array.slice(0,midIndex)
+        let rightPart = array.slice(midIndex+1)
+        root.left = buildTree(leftPart)
+        root.right = buildTree(rightPart)
         return root
     }
 
-    return buildTree(arr)
+    return buildTree(inorderRes)
 };
+
 // @lc code=end
 
