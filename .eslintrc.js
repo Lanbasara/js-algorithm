@@ -3,10 +3,10 @@
  * https://juejin.cn/post/6844904194336358407
  */
 module.exports = {
-  plugins: ["prettier"],
+  plugins: ['prettier'],
   env: { es6: true, browser: true },
   rules: {
-    "prettier/prettier": "error",
+    'prettier/prettier': 'error',
   },
-  extends: ["plugin:prettier/recommended"],
+  extends: ['plugin:prettier/recommended'],
 };
