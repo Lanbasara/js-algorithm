@@ -67,17 +67,49 @@
  * @param {TreeNode} root
  * @return {number}
  */
+// var rob = function(root) {
+//     function postOrder(node){
+//         if(!node) return [0,0]
+//         let left = postOrder(node.left)
+//         let right = postOrder(node.right)
+//         let Do = node.val + left[0] + right[0]
+//         let DoNot = Math.max(...left) + Math.max(...right)
+//         return [DoNot, Do]
+//     }
+
+//     return Math.max(...postOrder(root))
+// };
+// @lc code=end
+
+
+
 var rob = function(root) {
+    // 0: robbed, 1 : not robbed
     function postOrder(node){
         if(!node) return [0,0]
         let left = postOrder(node.left)
         let right = postOrder(node.right)
-        let Do = node.val + left[0] + right[0]
-        let DoNot = Math.max(...left) + Math.max(...right)
-        return [DoNot, Do]
+        let temp = [0,0]
+        temp[0] = Math.max(left[1]+right[1]+node.val,left[0]+right[0])
+        temp[1] = Math.max(...left) + Math.max(...right)
+        return temp
     }
 
     return Math.max(...postOrder(root))
 };
-// @lc code=end
-
+let root = {
+    val : 3,
+    left : {
+        val : 2,
+        right : {
+            val : 3
+        }
+    },
+    right : {
+        val : 3,
+        right : {
+            val : 1
+        }
+    }
+}
+rob(root)
