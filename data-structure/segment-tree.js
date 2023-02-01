@@ -7,39 +7,42 @@
  */
 
 class SegmentTree {
-  constructor(array) {
-    this.start = 0;
-    this.end = array.length - 1;
-    this.tree = this.build(this.start, this.end, array);
+  constructor(nums){
+    let length = nums.length
+    this.n = length
+    this.tree = new Array(length).fill(0).concat(nums)
+    for(let i=length-1;i>0;i--){
+      this.tree[i] = this.tree[2 * i] + this.tree[2 * i + 1]
+    }
   }
-  build(start, end, array) {
-    const dp = new Array();
-    function _build(l, r, p) {
-      if (l === r) {
-        dp[p] = array[l];
-        return;
+  update(index,val){
+    let i = index+this.n
+    let delta = val - this.tree[i]
+    while(i){
+      this.tree[i] += delta
+      i = Math.floor(i/2)
+    }
+  }
+  sumRange(left,right){
+    let [i,j] = [left+this.n, right+this.n]
+    let sum = 0
+    while(i<=j){
+      if(i%2 === 1){
+         sum += this.tree[i]
+         i++
       }
-      let mid = Math.floor(l + (r - l) / 2);
-      _build(l, mid, 2 * p + 1);
-      _build(mid + 1, r, 2 * p + 2);
-      dp[p] = dp[2 * p + 1] + dp[2 * p + 2];
+      if(j % 2 === 0){
+        sum += this.tree[j]
+        j--
+      }
+      i = Math.floor(i/2)
+      j = Math.floor(j/2)
     }
-    _build(start, end, 0);
-    return dp;
-  }
-
-  getSum(from, to, l = this.start, r = this.end, p = 0) {
-    if (from <= l && to >= r) {
-      return this.tree[p];
-    }
-    let mid = Math.floor(l + (r - l) / 2);
-    let sum = 0;
-    if (from <= mid) sum += this.getSum(from, to, l, mid, 2 * p + 1);
-    if (to > mid) sum += this.getSum(from, to, mid + 1, r, 2 * p + 2);
-    return sum;
+    return sum
   }
 }
 
+const tree = new SegmentTree([10, 11, 12, 13, 14])
 module.exports = {
   SegmentTree,
 };
