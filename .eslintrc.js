@@ -4,7 +4,7 @@
  */
 module.exports = {
   plugins: ['prettier'],
-  env: { es6: true, browser: true },
+  env: { esnext: true, browser: true },
   rules: {
     'prettier/prettier': 'error',
   },
