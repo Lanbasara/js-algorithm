@@ -29,4 +29,13 @@ describe('Segment-tree test', () => {
     expect(tree.sumRange(3, 3)).toBe(13);
     expect(tree.sumRange(4, 4)).toBe(14);
   });
+
+  it('2. preFix', () => {
+    const tree = new SegmentTree([10, 11, 12, 13, 14]);
+    expect(tree.preFix(0)).toBe(10);
+    expect(tree.preFix(1)).toBe(21);
+    expect(tree.preFix(2)).toBe(33);
+    expect(tree.preFix(3)).toBe(46);
+    expect(tree.preFix(4)).toBe(60);
+  });
 });
