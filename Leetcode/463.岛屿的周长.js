@@ -64,42 +64,21 @@
  * @return {number}
  */
  var islandPerimeter = function(grid) {
-    let [row,col] = [grid.length-1,grid[0].length-1]
-    
-    function getRowRes(row,col,value){
-        let isIsland = value === 1
-        if(row === 0){
-            return isIsland ? 1 : 0
-        } else if(row === grid.length-1){
-            let isTopIsland = grid[row-1][col] === 1
-            let temp1 = isTopIsland ? 0 : 1
-            let temp2 = isIsland ? 1 : 0
-            return temp1 + temp2
-        } else {
-            let isTopIsland = grid[row-1][col] === 1
-            return isTopIsland ? 0 : 1
-        }
-    }
-
-    function getColRes(row,col,value){
-        let isIsland = value === 1
-        if(col === 0){
-            return isIsland ? 1 : 0
-        } else if(col === grid[row].length-1){
-            let isLeftIsland = grid[row][col-1] === 1
-            let temp1 = isLeftIsland ? 0 : 1
-            let temp2 = isIsland ? 1 : 0
-            return temp1 + temp2
-        } else {
-            let isLeftIsland = grid[row][col-1] === 1
-            return isLeftIsland ? 0 : 1
-        }
-    }
+    const dirX = [-1,1,0,0]
+    const dirY = [0,0,-1,1]
     let res = 0
-    for(let i=0;i<row;i++){
-        for(let j=0;j<col;j++){
-            let [row,col,value] = [i,j,grid[i][j]]
-            res += (getRowRes(row,col,value)+getColRes(row,col,value))
+    for(let i=0;i<grid.length;i++){
+        for(let j=0;j<grid[i].length;j++){
+            let value = grid[i][j]
+            if(value === 1){
+                for(let k=0;k<dirX.length;k++){
+                    let x = i + dirX[k]
+                    let y = j + dirY[k]
+                    if(x<0 || x > grid.length-1 || y < 0 || y > grid[i].length-1 || grid[x][y] === 0){
+                        res++
+                    }
+                }
+            }
         }
     }
     return res
