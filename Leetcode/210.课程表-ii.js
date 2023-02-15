@@ -68,18 +68,33 @@
  * @return {number[]}
  */
  var findOrder = function(numCourses, prerequisites) {
-    let indegree = new Array(numCourses).fill(0)
-    let graph = {}
-    for(let i=0;i<prerequisites.length;i++){
-        let [to,from] = prerequisites[i]
-        console.log('to is',to, 'indegree now is',indegree[to])
-        indegree[to]++
+    const indegree = new Array(numCourses).fill(0)
+    const graph = {}
+    for(let [to,from] of prerequisites){
         graph[from] = graph[from] || []
+        indegree[to]++
         graph[from].push(to)
     }
 
-    console.log(indegree)
-    console.log(graph)
+    const q = []
+    for(let i=0;i<indegree.length;i++){
+        if(indegree[i] === 0){
+            q.push(i)
+        }
+    }
+    const res = []
+    while(q.length){
+        let node = q.shift()
+        res.push(node)
+        for(let next of graph[node]||[]){
+            indegree[next]--
+            if(indegree[next]===0){
+                q.push(next)
+            }
+        }
+    }
+
+    return indegree.every(item => item === 0) ? res : []
 };
 numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
 console.log(findOrder(numCourses,prerequisites))
