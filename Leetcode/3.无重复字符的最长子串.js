@@ -59,21 +59,18 @@
  * @return {number}
  */
  var lengthOfLongestSubstring = function(s) {
-    let [l,r] = [0,0]
-    let res = 0
-    let str = ''
-    let targetMap = {}
-    while(r<s.length){
-        targetMap[s[r]] = (targetMap[s[r]] || 0)+1
-        while(targetMap[s[l]]>1){
-            targetMap[s[l]] === 0? targetMap[s[l]] = 0 : targetMap[s[l]]--
-            l++
-        }
-        str = s.substring(l,r+1)
-        res = Math.max(res, r+1-l)
+   let r = 0
+   const reg = /([\s\S]).*\1/
+   let len = 0
+   for(let l=0;l<s.length;l++){
+    sub = s.substring(l,r+1)
+    while(r<s.length && !reg.test(sub)){
+        len = Math.max(len,r+1-l)
         r++
+        sub = s.substring(l,r+1)
     }
-    return res
+   }
+   return len
 };
 //                                    01234567 
 console.log(lengthOfLongestSubstring("abcabcbb"))
